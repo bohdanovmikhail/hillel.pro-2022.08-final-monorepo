@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@chat/constants": ["libs/constants/src/index.ts"],
+      "@chat/mocks": ["libs/mocks/src/index.ts"],
       "@chat/models": ["libs/models/src/index.ts"]
     }
   },
