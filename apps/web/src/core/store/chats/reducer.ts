@@ -1,4 +1,5 @@
 import { ChatModel } from '@chat/models';
+import { createMockChat } from '@chat/mocks';
 
 import { createMappedReducer } from '../_utils';
 
@@ -8,4 +9,18 @@ export default createMappedReducer<ChatModel>({
   actions: {
     ADD: actions.actionTest.TYPE,
   },
+  initial: [
+    createMockChat({
+      id: '1111',
+      title: 'Hillel Pro',
+    }),
+    createMockChat({
+      id: '2222',
+      title: 'Hillel Basic',
+    }),
+    createMockChat({
+      id: '3333',
+      title: 'Hillel Global',
+    }),
+  ]
 });

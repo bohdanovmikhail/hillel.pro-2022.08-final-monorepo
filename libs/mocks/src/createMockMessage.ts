@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 
-import { MessageModel } from '@shared/models';
+import { MessageModel } from '@chat/models';
 
 export function createMockMessage(override?: Partial<MessageModel>): MessageModel {
   return {
