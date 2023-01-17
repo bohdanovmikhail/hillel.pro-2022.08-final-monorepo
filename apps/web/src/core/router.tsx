@@ -1,9 +1,9 @@
 import { createBrowserRouter, createHashRouter } from 'react-router-dom';
 
-import { Root } from '@views/Root';
-import { ChatMain, ChatEmpty, ChatRoom } from '@views/chat';
-import { AuthSignIn, AuthSignUp, AuthForgot } from '@views/auth';
-import { UserProfile } from '@views/user';
+import { Root } from '../views/Root';
+import { ChatEmpty, ChatMain, ChatRoom } from '../views/chat';
+import { UserProfile } from '../views/user';
+import { AuthForgot, AuthSignIn, AuthSignUp } from '../views/auth';
 
 const createRouter = process.env.ENV === 'gh-pages' ? createHashRouter : createBrowserRouter;
 

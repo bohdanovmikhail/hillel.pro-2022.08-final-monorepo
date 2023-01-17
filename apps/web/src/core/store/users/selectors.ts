@@ -1,3 +1,3 @@
-import { IState } from '@core/store';
+import { IState } from "../rootReducer";
 
-export const selectFeature = (state: IState) => (state as any).feature;
+export const selectF = (state: IState) => (state as any).feature;

@@ -5,9 +5,9 @@ import { ThemeProvider } from '@mui/material';
 import { RouterProvider } from 'react-router-dom';
 import 'normalize.css';
 
-import routes from '@core/router';
-import store from '@core/store';
-import theme from '@core/theme';
+import routes from './core/router';
+import store from './core/store';
+import theme from './core/theme';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

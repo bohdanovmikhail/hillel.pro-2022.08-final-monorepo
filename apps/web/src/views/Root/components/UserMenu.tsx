@@ -1,20 +1,6 @@
-import { useState } from 'react';
 import { Avatar, Box, IconButton, Menu, MenuItem, Tooltip, Typography } from '@mui/material';
 
-import { ActionOrPath, useNavi } from '@shared/hooks';
-
 export function UserMenu({ items }: IProps) {
-  const goTo = useNavi();
-
-  // const [anchorElUser, setAnchorElUser] = useState(null);
-
-  const handleOpenUserMenu = (event: any) => {
-    // setAnchorElUser(event.currentTarget);
-  };
-  const handleCloseUserMenu = () => {
-    // setAnchorElUser(null);
-  };
-
   return (
     <Box sx={{ flexGrow: 0 }}>
       <Tooltip title="Open settings">
@@ -25,7 +11,6 @@ export function UserMenu({ items }: IProps) {
       <Menu
         sx={{ mt: '45px' }}
         id="menu-appbar"
-        // anchorEl={anchorElUser}
         anchorOrigin={{
           vertical: 'top',
           horizontal: 'right',
@@ -38,7 +23,7 @@ export function UserMenu({ items }: IProps) {
         open={false}
       >
         {items.map((item, index) => (
-          <MenuItem key={index} onClick={goTo(item.action)}>
+          <MenuItem key={index}>
             <Typography textAlign="center">{item.title}</Typography>
           </MenuItem>
         ))}
@@ -53,5 +38,4 @@ interface IProps {
 
 interface IUserMenuItem {
   title: string;
-  action: ActionOrPath;
 }

@@ -7,17 +7,16 @@ import {
   Typography,
   Menu,
   Container,
-  Avatar,
   Button,
-  Tooltip,
   MenuItem,
   Link,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import AdbIcon from '@mui/icons-material/Adb';
 
-import { YOUR_SITE_NAME } from '@constants';
-import { UserMenu } from '@views/Root/components/UserMenu';
+import { YOUR_SITE_NAME } from '@chat/constants';
+
+import { UserMenu } from './UserMenu';
 
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = [{ title: 'Profile', action: '/profile' }];

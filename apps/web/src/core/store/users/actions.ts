@@ -1,3 +1,3 @@
 import { createAction } from '../_utils';
 
-export const actionTest = createAction('feature.action');
+export const actionT = createAction('feature.action');

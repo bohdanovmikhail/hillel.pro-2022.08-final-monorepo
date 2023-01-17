@@ -5,9 +5,9 @@ import {
 import { connect } from 'react-redux';
 import { Outlet } from 'react-router-dom';
 
-import { ChatModel } from '@models';
-import { IState } from '@core/store';
-import { selectChatsList } from '@store/chats';
+import { ChatModel } from '@chat/models';
+
+import { IState, selectChatsList } from '../../../core/store';
 
 import { ChatList } from './components/ChatList';
 

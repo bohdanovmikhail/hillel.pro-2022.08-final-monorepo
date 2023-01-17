@@ -14,8 +14,8 @@ import {
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
-import { Copyright } from '@shared/components';
-import { useFormData } from '@shared/hooks';
+import { Copyright } from '../../../shared/components';
+import { useFormData } from '../../../shared/hooks';
 
 export function AuthSignIn() {
   const [formData, , setFormData] = useFormData({

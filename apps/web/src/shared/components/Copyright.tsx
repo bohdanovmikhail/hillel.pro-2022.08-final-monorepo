@@ -1,8 +1,8 @@
-import { Link, Typography } from '@mui/material';
+import { Link, Typography, TypographyProps } from '@mui/material';
 
-import { YOUR_SITE_DOMAIN, YOUR_SITE_NAME } from '@constants';
+import { YOUR_SITE_DOMAIN, YOUR_SITE_NAME } from '@chat/constants';
 
-export function Copyright(props: any) {
+export function Copyright(props: IProps) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
@@ -14,3 +14,5 @@ export function Copyright(props: any) {
     </Typography>
   );
 }
+
+type IProps = TypographyProps;

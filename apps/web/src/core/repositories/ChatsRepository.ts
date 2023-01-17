@@ -1,4 +1,4 @@
-import { ChatModel } from '@chat/shared/models';
+import { ChatModel } from '@chat/models';
 
 import { BackEndRepository } from './_BackEndRepository';
 

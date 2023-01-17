@@ -1,4 +1,4 @@
-import { _BaseModel } from '@chat/shared/models';
+import { _BaseModel } from '@chat/models';
 
 export abstract class BaseRepository<E extends _BaseModel> {
   public abstract getAll(): Promise<E[]>;

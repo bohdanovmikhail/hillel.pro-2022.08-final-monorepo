@@ -4,7 +4,7 @@ import {
   Divider,
 } from '@mui/material';
 
-import { ChatModel } from '@models';
+import { ChatModel } from '@chat/models';
 
 import { ChatItem } from './ChatItem';
 

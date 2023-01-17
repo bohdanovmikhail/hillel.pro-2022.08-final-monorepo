@@ -1,7 +1,8 @@
-export * from './createAction';
-export * from './createPayloadAction';
-export * from './createErrorAction';
-export * from './createPayloadActionWith';
+export * from './actions/createAction';
+export * from './actions/createPayloadAction';
+export * from './actions/createErrorAction';
+export * from './actions/createPayloadActionWith';
 
-export * from './createWSMiddleware';
-export * from './createMockAPIMiddleware';
+export * from './middlewares/createWSMiddleware';
+
+export * from './reducers/createMappedReducer';

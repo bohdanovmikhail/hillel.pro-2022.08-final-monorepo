@@ -1,6 +1,6 @@
 import { AnyAction } from 'redux';
 
-import { Message } from '@models';
+import { MessageModel } from '@chat/models';
 
 import * as actions from './actions';
 
@@ -22,5 +22,5 @@ export default function reducer(state: IMessagesState = initial, action: AnyActi
 }
 
 type IMessagesState = {
-  list: Message[],
+  list: MessageModel[],
 };

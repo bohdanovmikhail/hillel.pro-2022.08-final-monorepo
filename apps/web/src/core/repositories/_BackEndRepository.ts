@@ -1,4 +1,5 @@
-import { _BaseModel } from '@shared/models';
+import { _BaseModel } from '@chat/models';
+
 import { BaseRepository } from './_BaseRepository';
 
 export class BackEndRepository<E extends _BaseModel> extends BaseRepository<E> {

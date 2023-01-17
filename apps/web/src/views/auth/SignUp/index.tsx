@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
-import { Copyright } from '@shared/components';
+import { Copyright } from '../../../shared/components';
 
 export function AuthSignUp() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {

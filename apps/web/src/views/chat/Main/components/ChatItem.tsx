@@ -1,7 +1,8 @@
 import { styled, Typography, ListItem, ListItemAvatar, Avatar, ListItemText, Link } from '@mui/material';
 import { faker } from '@faker-js/faker';
-import { ChatModel } from '@models';
 import { useParams } from 'react-router-dom';
+
+import { ChatModel } from '@chat/models';
 
 const ChatTitle = styled(Typography)({
   overflow: 'hidden',

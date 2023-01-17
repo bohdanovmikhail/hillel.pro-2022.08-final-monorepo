@@ -24,7 +24,7 @@ export function createPayloadActionWith<
 ): IPayloadActionWithCreator<P, T, PC, Args> & IActionType<T> {
   const actionCreator = (...args: Args): PayloadActionWith<T, P> => ({
     type,
-    payload: payloadCreator(...args),
+    payload: payloadCreator(...args as any),
   });
   actionCreator.TYPE = type;
 
