@@ -22,6 +22,11 @@
     "@types/node": "16.11.7",
     "@types/react": "18.0.25",
     "@types/react-dom": "18.0.9",
+    "@types/react-redux": "^7.1.25",
+    "@types/redux": "^3.6.0",
+    "@types/redux-logger": "^3.0.9",
+    "@types/redux-thunk": "^2.1.0",
+    "@types/socket.io-client": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "^5.36.1",
     "@typescript-eslint/parser": "^5.36.1",
     "babel-jest": "28.1.1",
@@ -45,10 +50,20 @@
     "url-loader": "^4.1.1"
   },
   "dependencies": {
-    "@emotion/react": "11.10.5",
-    "@emotion/styled": "11.10.5",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@faker-js/faker": "^7.6.0",
+    "@mui/icons-material": "^5.11.0",
+    "@mui/material": "^5.11.4",
+    "normalize.css": "^8.0.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-redux": "^8.0.5",
+    "react-router-dom": "^6.6.2",
+    "redux": "^4.2.0",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.4.2",
+    "socket.io-client": "^4.5.4",
     "tslib": "^2.3.0"
   }
 }
