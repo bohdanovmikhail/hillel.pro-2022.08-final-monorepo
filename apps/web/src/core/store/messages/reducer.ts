@@ -1,18 +1,14 @@
-import { AnyAction } from 'redux';
+import { AnyAction, combineReducers } from 'redux';
 
 import { MessageModel } from '@chat/models';
 
 import * as actions from './actions';
 
-const initial: IMessagesState = {
-  list: [],
-};
-
-export default function reducer(state: IMessagesState = initial, action: AnyAction) {
+function listReducer(state: MessageModel[] = [], action: AnyAction) {
   switch (action.type) {
     case actions.messagesReceive.TYPE:
       return [
-        ...state.list,
+        ...state,
         action.payload,
       ];
 
@@ -21,6 +17,6 @@ export default function reducer(state: IMessagesState = initial, action: AnyActi
   }
 }
 
-type IMessagesState = {
-  list: MessageModel[],
-};
+export default combineReducers({
+  list: listReducer,
+});
