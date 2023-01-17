@@ -4,11 +4,21 @@ import { _BaseModel } from '@chat/models';
 
 import { PayloadAction } from '../actions/createPayloadAction';
 
-
 export function createMappedReducer<Entity extends _BaseModel>({
   actions: { ADD },
-}: IMappedReducerParams) {
-  function listReducer(state: Entity[] = [], action: PayloadAction<string, Entity>) {
+  initial = [],
+}: IMappedReducerParams<Entity>) {
+  const initialList = initial;
+  const initialIds = initial.map((entity) => entity.id);
+  const initialMap = initial.reduce((map, entity) => ({
+    ...map,
+    [entity.id]: entity,
+  }), {});
+
+  function listReducer(
+    state: Entity[] = initialList,
+    action: PayloadAction<string, Entity>,
+  ) {
     switch (action.type) {
       case ADD:
         return [
@@ -21,7 +31,10 @@ export function createMappedReducer<Entity extends _BaseModel>({
     }
   }
 
-  function idsReducer(state: string[] = [], action: PayloadAction<string, Entity>) {
+  function idsReducer(
+    state: string[] = initialIds,
+    action: PayloadAction<string, Entity>,
+  ) {
     switch (action.type) {
       case ADD:
         return [
@@ -34,7 +47,10 @@ export function createMappedReducer<Entity extends _BaseModel>({
     }
   }
 
-  function mapReducer(state: Record<string, Entity> = {}, action: PayloadAction<string, Entity>) {
+  function mapReducer(
+    state: Record<string, Entity> = initialMap,
+    action: PayloadAction<string, Entity>,
+  ) {
     switch (action.type) {
       case ADD:
         return {
@@ -54,8 +70,9 @@ export function createMappedReducer<Entity extends _BaseModel>({
   })
 }
 
-interface IMappedReducerParams {
+interface IMappedReducerParams<Entity extends _BaseModel> {
   actions: IMappedReducerActions;
+  initial?: Entity[];
 }
 
 interface IMappedReducerActions {
