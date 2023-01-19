@@ -1,5 +1,12 @@
-const initial = {};
+import { UserModel } from '@chat/models';
 
-export default function reducer(state = initial, action: any) {
-  return state;
-}
+import { createMappedReducer } from "../_utils";
+
+import * as actions from './actions';
+
+export default createMappedReducer<UserModel>({
+  actions: {
+    ADD: '',
+    REMOVE: '',
+  },
+});

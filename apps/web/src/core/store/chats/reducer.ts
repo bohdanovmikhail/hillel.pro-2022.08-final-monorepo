@@ -8,6 +8,7 @@ import * as actions from './actions';
 export default createMappedReducer<ChatModel>({
   actions: {
     ADD: actions.actionTest.TYPE,
+    REMOVE: actions.actionTest.TYPE,
   },
   initial: [
     createMockChat({

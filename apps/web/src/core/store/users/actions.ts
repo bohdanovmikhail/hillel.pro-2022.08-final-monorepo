@@ -1,3 +1,3 @@
-import { createAction } from '../_utils';
+import { createPayloadAction } from '../_utils';
 
-export const actionT = createAction('feature.action');
+export const usersGetInfo = createPayloadAction('users.getInfo');

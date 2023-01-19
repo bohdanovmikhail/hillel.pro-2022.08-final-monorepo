@@ -1,28 +1,15 @@
-import { IAction, IActionType } from './createAction';
-
-type AnyFn = (...args: any) => any;
-
-export interface PayloadActionWith<T extends string, P> extends IAction<T> {
-  payload: P;
-}
-
-export type IPayloadActionWithCreator<
-  P extends ReturnType<PC>,
-  T extends string = string,
-  PC extends AnyFn = AnyFn,
-  Args extends Parameters<PC> = Parameters<PC>,
-> = ((...args: Args) => PayloadActionWith<T, P>) & IActionType<T>;
+import { IActionType, IPayloadAction, IPayloadActionWithCreator, IAnyFn } from '../types';
 
 export function createPayloadActionWith<
   P extends ReturnType<PC>,
   T extends string = string,
-  PC extends AnyFn = AnyFn,
+  PC extends IAnyFn = IAnyFn,
   Args extends Parameters<PC> = Parameters<PC>
 >(
   type: T,
   payloadCreator: PC,
 ): IPayloadActionWithCreator<P, T, PC, Args> & IActionType<T> {
-  const actionCreator = (...args: Args): PayloadActionWith<T, P> => ({
+  const actionCreator = (...args: Args): IPayloadAction<T, P> => ({
     type,
     payload: payloadCreator(...args as any),
   });

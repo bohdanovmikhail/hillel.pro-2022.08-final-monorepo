@@ -2,10 +2,10 @@ import { combineReducers } from 'redux';
 
 import { _BaseModel } from '@chat/models';
 
-import { PayloadAction } from '../actions/createPayloadAction';
+import { IPayloadAction } from '../types';
 
 export function createMappedReducer<Entity extends _BaseModel>({
-  actions: { ADD },
+  actions: { ADD, REMOVE },
   initial = [],
 }: IMappedReducerParams<Entity>) {
   const initialList = initial;
@@ -17,7 +17,7 @@ export function createMappedReducer<Entity extends _BaseModel>({
 
   function listReducer(
     state: Entity[] = initialList,
-    action: PayloadAction<string, Entity>,
+    action: IPayloadAction<string, Entity>,
   ) {
     switch (action.type) {
       case ADD:
@@ -33,7 +33,7 @@ export function createMappedReducer<Entity extends _BaseModel>({
 
   function idsReducer(
     state: string[] = initialIds,
-    action: PayloadAction<string, Entity>,
+    action: IPayloadAction<string, Entity>,
   ) {
     switch (action.type) {
       case ADD:
@@ -49,7 +49,7 @@ export function createMappedReducer<Entity extends _BaseModel>({
 
   function mapReducer(
     state: Record<string, Entity> = initialMap,
-    action: PayloadAction<string, Entity>,
+    action: IPayloadAction<string, Entity>,
   ) {
     switch (action.type) {
       case ADD:
@@ -77,4 +77,5 @@ interface IMappedReducerParams<Entity extends _BaseModel> {
 
 interface IMappedReducerActions {
   ADD: string;
+  REMOVE: string;
 }

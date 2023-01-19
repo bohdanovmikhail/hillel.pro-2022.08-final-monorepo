@@ -1,3 +1,4 @@
 import { IState } from "../rootReducer";
 
-export const selectF = (state: IState) => (state as any).feature;
+export const selectUsers = (state: IState) => state.users;
+export const selectUserById = (state: IState, userId: string) => selectUsers(state).map[userId];

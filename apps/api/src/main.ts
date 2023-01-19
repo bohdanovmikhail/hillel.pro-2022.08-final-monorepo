@@ -3,6 +3,8 @@ import * as cors from 'cors';
 import { createServer } from 'http';
 import { Server as SocketServer } from 'socket.io';
 
+import { handleConnection } from './app/ws-handlers';
+
 // Common configs
 const port = process.env.port || 3001;
 
@@ -10,6 +12,7 @@ const port = process.env.port || 3001;
 const app = express();
 
 app.use(cors({ origin: '*' }));
+
 
 // Configuring HTTP server
 const server = createServer(app);
@@ -22,8 +25,4 @@ server.on('error', console.error);
 // Configuring WebSocket server
 const socketServer = new SocketServer(server, { cors: { origin: '*' } });
 
-socketServer.on('connection', (socket) => {
-  socket.on('sendClientMessage', (msgData) => {
-    socketServer.emit('sendServerMessage', msgData);
-  });
-});
+socketServer.on('connection', (socket) => handleConnection(socket, socketServer));

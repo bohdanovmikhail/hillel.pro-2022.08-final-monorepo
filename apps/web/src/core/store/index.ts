@@ -3,15 +3,13 @@ import { createLogger } from 'redux-logger';
 
 import rootReducer from './rootReducer';
 
-// import messagesMiddleware from './messages/middleware';
-// import roomsMiddleware from './rooms/middleware';
-// import usersMiddleware from './users/middleware';
+import socketsMiddleware from './sockets/middleware';
+import messagesMiddleware from './messages/middleware';
 
 const middlewares = [
   createLogger({ collapsed: true }),
-  // messagesMiddleware,
-  // roomsMiddleware,
-  // usersMiddleware,
+  socketsMiddleware,
+  messagesMiddleware,
 ];
 
 export default createStore(rootReducer, compose(applyMiddleware(...middlewares)));
