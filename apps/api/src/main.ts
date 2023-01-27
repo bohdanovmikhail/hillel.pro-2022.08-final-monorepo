@@ -1,28 +1,22 @@
-import * as express from 'express';
-import * as cors from 'cors';
-import { createServer } from 'http';
-import { Server as SocketServer } from 'socket.io';
+/**
+ * This is not a production server yet!
+ * This is only a minimal backend to get started.
+ */
 
-import { handleConnection } from './app/ws-handlers';
+import { Logger } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
 
-// Common configs
-const port = process.env.port || 3001;
+import { AppModule } from './app/app.module';
 
-// Configuring express
-const app = express();
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule, { cors: true });
+  const globalPrefix = 'api';
+  app.setGlobalPrefix(globalPrefix);
+  const port = process.env.PORT || 3001;
+  await app.listen(port);
+  Logger.log(
+    `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`
+  );
+}
 
-app.use(cors({ origin: '*' }));
-
-
-// Configuring HTTP server
-const server = createServer(app);
-server.listen(port, () => {
-  console.log(`Listening at http://localhost:${port}/api`);
-});
-server.on('error', console.error);
-
-
-// Configuring WebSocket server
-const socketServer = new SocketServer(server, { cors: { origin: '*' } });
-
-socketServer.on('connection', (socket) => handleConnection(socket, socketServer));
+bootstrap();
