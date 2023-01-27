@@ -5,3 +5,5 @@ export interface MessageModel extends BaseModel {
   created: number;
   text: string;
 }
+
+export type NewMessageModel = Omit<MessageModel, 'id' | 'fromUserId' | 'created'>;
