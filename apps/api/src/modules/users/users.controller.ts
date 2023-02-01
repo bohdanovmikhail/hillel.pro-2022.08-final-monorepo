@@ -2,7 +2,7 @@ import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common'
 
 import { UserModel } from '@chat/models';
 
-import { UsersRepository } from '../../repositories';
+import { UsersRepository } from './users.repository';
 
 @Controller('users')
 export class UsersController {

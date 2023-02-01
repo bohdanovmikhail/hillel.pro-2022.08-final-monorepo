@@ -7,10 +7,13 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 
-import { WebSocketEvents } from '@chat/websocket';
-import { NewMessageModel } from '@chat/models';
+import {
+  WebSocketEvents,
+  IWebSocketClientMessage,
+  IWebSocketRequestLastMessages,
+} from '@chat/websocket';
 
-import { MessagesRepository } from '../../repositories';
+import { MessagesRepository } from './messages.repository';
 import { MessagesService } from './messages.service';
 
 @WebSocketGateway({ cors: '*' })
@@ -23,41 +26,34 @@ export class MessagesGateway {
     private messagesRepository: MessagesRepository,
   ) {}
 
-  @SubscribeMessage(WebSocketEvents.MessageToServer)
+  @SubscribeMessage(WebSocketEvents.ClientMessage)
   async receiveMessageFromClient(
-    @MessageBody() data: IWSMessageRequestData,
     @ConnectedSocket() socket: Socket,
+    @MessageBody() data: IWebSocketClientMessage,
   ) {
-    const { chatId, userId, message } = data;
+    const { chatId, message } = data;
 
-    // TODO: use this when Auth functionality will be implemented
-    // const author = await this.messagesService.getUserFromSocket(socket);
+    const user = await this.messagesService.getUserFromSocket(socket);
 
     const newMessage = await this.messagesRepository.add(chatId, {
       ...message,
-      fromUserId: userId,
-    })
+      fromUserId: user.id,
+    });
 
-    this.server.sockets.emit(WebSocketEvents.MessageToClient, newMessage);
+    this.server.sockets.emit(WebSocketEvents.ServerMessage, {
+      chatId,
+      message: newMessage,
+    });
   }
 
-  @SubscribeMessage('request_all_messages')
+  @SubscribeMessage(WebSocketEvents.RequestLastMessages)
   async requestAllMessages(
     @ConnectedSocket() socket: Socket,
+    @MessageBody() { chatId, quantity = 20 }: IWebSocketRequestLastMessages,
   ) {
-    // await this.chatService.getUserFromSocket(socket);
-    // const messages = await this.chatService.getAllMessages();
+    const messages = await this.messagesRepository.getLimit(chatId, quantity);
 
-    // socket.emit('send_all_messages', messages);
+    socket.emit(WebSocketEvents.ResponseLastMessages, { chatId, messages });
 
-    return Promise.resolve();
   }
-}
-
-interface IWSMessageRequestData {
-  // TODO: replace it with direct subscription to chat stream
-  chatId: string;
-  // TODO: remove it, when Auth functionality will be implemented
-  userId: string;
-  message: NewMessageModel;
 }

@@ -1,13 +1,16 @@
-import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body, UseGuards } from '@nestjs/common';
 
 import { ChatModel } from '@chat/models';
 
-import { ChatsRepository } from '../../repositories';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+
+import { ChatsRepository } from './chats.repository';
 
 @Controller('chats')
 export class ChatsController {
   constructor(private readonly chatsRepository: ChatsRepository) {}
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   getAll(): Promise<ChatModel[]> {
     return this.chatsRepository.getAll();

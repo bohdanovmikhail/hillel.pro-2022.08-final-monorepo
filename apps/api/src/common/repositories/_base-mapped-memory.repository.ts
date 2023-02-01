@@ -1,6 +1,6 @@
 import { _BaseModel } from '@chat/models';
 
-import { MappedDataRepository, DataRepository } from '../interfaces';
+import { MappedDataRepository, DataRepository } from '../../interfaces';
 
 import { BaseMemoryRepository } from './_base-memory.repository';
 

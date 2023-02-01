@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker';
 
 import { _BaseModel } from '@chat/models';
 
-import { DataRepository } from '../interfaces';
+import { DataRepository } from '../../interfaces';
 
 import { deepClone } from './_utils';
 
@@ -74,14 +74,17 @@ export abstract class BaseMemoryRepository<Entity extends _BaseModel> implements
   protected abstract createMockEntity(override?: Partial<Entity>): Entity;
 
   protected getFromStorage(id: string): Entity {
-    return this.storage.find((entity: Entity) => entity.id === id);
+    return this.getFromStorageBy('id', id);
+  }
+
+  protected getFromStorageBy(key: keyof Entity, value: any): Entity | null {
+    return this.storage.find((entity: Entity) => entity[key] === value) || null;
   }
 
   protected setToStorage(entity: Entity): void {
     const index = this.getIndexInStorage(entity.id);
 
     this.storage.splice(index, 1, entity);
-    // this.storage[index] = entity;
   }
 
   protected removeInStorage(id: string): void {

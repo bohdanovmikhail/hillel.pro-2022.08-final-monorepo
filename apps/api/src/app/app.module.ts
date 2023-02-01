@@ -1,14 +1,16 @@
 import { Module } from '@nestjs/common';
 
-import { RepositoriesModule } from '../repositories/repositories.module';
-import { UsersModule } from '../modules/users/users.module';
+import { AuthModule } from '../modules/auth/auth.module';
+import { ChatsModule } from '../modules/chats/chats.module';
 import { MessagesModule } from '../modules/messages/messages.module';
+import { UsersModule } from '../modules/users/users.module';
 
 @Module({
   imports: [
-    RepositoriesModule,
-    UsersModule,
+    AuthModule,
+    ChatsModule,
     MessagesModule,
+    UsersModule,
   ],
 })
 export class AppModule {}
