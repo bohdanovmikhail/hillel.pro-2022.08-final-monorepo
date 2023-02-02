@@ -1,32 +1,25 @@
-import { useEffect } from 'react';
-import { Dispatch } from 'redux';
-import { connect } from 'react-redux';
+import { useUserInfo } from '../../core/store/users/hooks';
 
-import { UserModel } from '@chat/models';
+export function UserAvatar({ userId }: IProps) {
+  const [userInfo, isUserInfoLoading] = useUserInfo(userId);
 
-import { IState, selectUserById, usersGetInfo } from '../../core/store';
-
-function UserAvatarView({ userInfo, getUser }: IProps) {
-  useEffect(() => {
-    if (!userInfo) {
-      getUser();
-    }
-  }, []);
-
-  return null;
+  return (
+    <div>
+      <img src={userInfo?.avatar} />
+    </div>
+  );
 }
 
-const mapState = (state: IState, { userId }: IProps) => ({
-  userInfo: selectUserById(state, userId),
-});
-const mapDispatch = (dispatch: Dispatch, { userId }: IProps) => ({
-  getUser: () => dispatch(usersGetInfo(userId)),
-});
+export function UserName({ userId }: IProps) {
+  const [userInfo] = useUserInfo(userId);
 
-export const UserAvatar = connect(mapState, mapDispatch)(UserAvatarView);
+  if (!userInfo) {
+    <span>Loading...</span>;
+  }
+
+  return <span>{userInfo?.userName}</span>;
+}
 
 interface IProps {
   userId: string;
-  userInfo: UserModel;
-  getUser: () => void;
 }

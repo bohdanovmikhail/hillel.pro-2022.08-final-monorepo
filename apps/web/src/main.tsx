@@ -5,6 +5,7 @@ import { ThemeProvider } from '@mui/material';
 import { RouterProvider } from 'react-router-dom';
 import 'normalize.css';
 
+import { AuthProvider } from './core/context';
 import routes from './core/router';
 import store from './core/store';
 import theme from './core/theme';
@@ -17,7 +18,9 @@ root.render(
   <StrictMode>
     <ReduxProvider store={store}>
       <ThemeProvider theme={theme}>
-        <RouterProvider router={routes} />
+        <AuthProvider>
+            <RouterProvider router={routes} />
+        </AuthProvider>
       </ThemeProvider>
     </ReduxProvider>
   </StrictMode>,

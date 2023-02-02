@@ -1,6 +1,6 @@
 import { _BaseModel } from '@chat/models';
 
-export abstract class BaseRepository<E extends _BaseModel> {
+export abstract class RestAPI<E extends _BaseModel> {
   public abstract getAll(): Promise<E[]>;
 
   public abstract get(id: string): Promise<E>;

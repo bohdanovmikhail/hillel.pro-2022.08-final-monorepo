@@ -9,7 +9,7 @@ import { BaseMemoryRepository } from '../../common/repositories';
 export class UsersRepository extends BaseMemoryRepository<UserModel> {
   constructor() {
     const initialData = [
-      createMockUser({ id: '1', userName: 'test', password: 'test' }),
+      createMockUser({ id: '1', userName: 'admin', password: 'admin' }),
       createMockUser({ id: '2' }),
       createMockUser({ id: '3' }),
       createMockUser({ id: '4' }),
