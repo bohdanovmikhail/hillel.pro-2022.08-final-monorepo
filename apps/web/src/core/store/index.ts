@@ -1,15 +1,15 @@
 import { applyMiddleware, compose, createStore } from 'redux';
+import reduxThunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 
 import rootReducer from './rootReducer';
 
 import socketsMiddleware from './sockets/middleware';
-import messagesMiddleware from './messages/middleware';
 
 const middlewares = [
+  reduxThunk,
   createLogger({ collapsed: true }),
   socketsMiddleware,
-  messagesMiddleware,
 ];
 
 export default createStore(rootReducer, compose(applyMiddleware(...middlewares)));

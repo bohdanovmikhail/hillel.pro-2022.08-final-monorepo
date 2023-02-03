@@ -1,44 +1,26 @@
 import { _BaseModel } from '@chat/models';
 
-import { RestAPI } from './_RestAPI';
+import { BaseAPI } from './_BaseAPI';
 
-export abstract class BackEndRestAPI<E extends _BaseModel> extends RestAPI<E> {
-  protected abstract entityType: string;
-
-  constructor(protected connectionUrl: string) {
-    super();
+export abstract class BackEndRestAPI<E extends _BaseModel> extends BaseAPI {
+  constructor(apiUrl: string, entityType: string) {
+    super(`${apiUrl}/${entityType}`);
   }
 
-  public getAll() {
-    return fetch(this.baseUrl)
-      .then(response => response.json());
+  public getAll(): Promise<E[]> {
+    return this.fetchGet();
   }
 
   public get(id: string): Promise<E> {
-    return fetch(`${this.baseUrl}/${id}`)
-      .then(response => response.json());
+    return this.fetchGet(id);
   }
 
   public create(entity: Omit<E, 'id'>): Promise<E> {
-    return fetch(this.baseUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(entity),
-    })
-      .then(response => response.json());
+    return this.fetchPost(null, entity);
   }
 
   public update(entity: E): Promise<E> {
-    return fetch(this.baseUrl, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(entity),
-    })
-      .then(response => response.json());
+    return this.fetchPut(null, entity);
   }
 
   public remove(entityOrId: E | string): Promise<E> {
@@ -46,13 +28,6 @@ export abstract class BackEndRestAPI<E extends _BaseModel> extends RestAPI<E> {
       entityOrId = entityOrId.id;
     }
 
-    return fetch(`${this.baseUrl}/${entityOrId}`, {
-      method: 'DELETE',
-    })
-      .then(response => response.json());
-  }
-
-  protected get baseUrl(): string {
-    return `${this.connectionUrl}/${this.entityType}`;
+    return this.fetchDelete(entityOrId);
   }
 }

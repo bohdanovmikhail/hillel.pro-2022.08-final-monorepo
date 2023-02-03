@@ -1,6 +1,7 @@
 import {
   Container,
   Grid,
+  styled,
 } from '@mui/material';
 import { connect } from 'react-redux';
 import { Outlet } from 'react-router-dom';
@@ -11,19 +12,30 @@ import { IState, selectChatsList } from '../../../core/store';
 
 import { ChatList } from './components/ChatList';
 
+const MainPageContainer = styled(Container)({
+  flex: '1 1 auto',
+  display: 'flex',
+  alignItems: 'stretch',
+});
+
+const ListContainer = styled(Grid)({
+  overflow: 'auto',
+  maxHeight: '100%',
+});
+
 function Main({ chatList }: IProps) {
   return (
-    <Container>
+    <MainPageContainer disableGutters>
       <Grid container>
-        <Grid item md={4} mr={2}>
+        <ListContainer item md={4} mr={2}>
           <ChatList list={chatList} />
-        </Grid>
+        </ListContainer>
 
         <Grid item md>
           <Outlet />
         </Grid>
       </Grid>
-    </Container>
+    </MainPageContainer>
   );
 }
 

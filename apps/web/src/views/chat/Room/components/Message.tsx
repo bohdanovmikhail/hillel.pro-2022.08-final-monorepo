@@ -8,6 +8,7 @@ import {
   TypographyProps,
   styled,
 } from '@mui/material';
+import { UserAvatar, UserName } from '../../../../shared/components';
 
 const StyledAvatar = styled(Avatar)(({ theme }) => ({
   width: theme.spacing(4),
@@ -40,7 +41,7 @@ const StyledTypography = styled(Typography)<{ itsMe: boolean }>(({ theme, itsMe 
 
 export function Message({
   itsMe,
-  avatar,
+  userId,
   messages,
   GridContainerProps,
   GridItemProps,
@@ -56,7 +57,9 @@ export function Message({
     >
       {!itsMe && (
         <Grid item {...GridItemProps}>
-          <StyledAvatar src={avatar} {...AvatarProps} />
+          <UserAvatar userId={userId} />
+          <UserName userId={userId} />
+          {/*<StyledAvatar src={avatar} {...AvatarProps} />*/}
         </Grid>
       )}
 
@@ -76,7 +79,7 @@ export function Message({
 interface IProps {
   messages: string[];
   itsMe?: boolean;
-  avatar?: string;
+  userId: string;
   GridContainerProps?: GridProps;
   GridItemProps?: GridProps;
   AvatarProps?: AvatarProps;

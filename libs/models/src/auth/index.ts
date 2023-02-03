@@ -1,2 +1,2 @@
 export * from './SignInDTO';
-export * from './TokenDTO';
+export * from './SignedInDTO';

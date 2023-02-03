@@ -15,6 +15,7 @@ import {
 
 import { MessagesRepository } from './messages.repository';
 import { MessagesService } from './messages.service';
+import { createMockMessage } from '@chat/mocks';
 
 @WebSocketGateway({ cors: '*' })
 export class MessagesGateway {
@@ -26,21 +27,22 @@ export class MessagesGateway {
     private messagesRepository: MessagesRepository,
   ) {}
 
-  @SubscribeMessage(WebSocketEvents.ClientMessage)
+  @SubscribeMessage(WebSocketEvents.ToServerMessage)
   async receiveMessageFromClient(
     @ConnectedSocket() socket: Socket,
     @MessageBody() data: IWebSocketClientMessage,
   ) {
-    const { chatId, message } = data;
+    const { chatId, text } = data;
 
     const user = await this.messagesService.getUserFromSocket(socket);
-
-    const newMessage = await this.messagesRepository.add(chatId, {
-      ...message,
+    const message = createMockMessage({
+      text,
       fromUserId: user.id,
     });
 
-    this.server.sockets.emit(WebSocketEvents.ServerMessage, {
+    const newMessage = await this.messagesRepository.add(chatId, message);
+
+    this.server.sockets.emit(WebSocketEvents.ToClientMessage, {
       chatId,
       message: newMessage,
     });

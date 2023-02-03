@@ -1,71 +1,53 @@
+import { useState, useEffect } from 'react';
 import { Paper } from '@mui/material';
 
 import { MessageModel } from '@chat/models';
 
 import { Message } from './Message';
 
-export function MessageList({ list }: any) {
+function groupMessages(list: MessageModel[]): IGroupedMessages[] {
+  const groups: IGroupedMessages[] = [];
+  let lastGroup: IGroupedMessages;
+
+  list.forEach((message: MessageModel) => {
+    if (!lastGroup || lastGroup.userId !== message.fromUserId) {
+      lastGroup = {
+        userId: message.fromUserId,
+        messages: [],
+      };
+    }
+
+    lastGroup.messages.push(message.text);
+  });
+
+  return groups;
+}
+
+export function MessageList({ list }: IProps) {
+  const [groupedMessages, setGroupedMessages] = useState<IGroupedMessages[]>([]);
+
+  useEffect(() => {
+    setGroupedMessages(groupMessages(list));
+  }, [list]);
+
   return (
     <Paper style={{ maxHeight: '500px', overflow: 'auto' }}>
-      {list.map((message: MessageModel, index: any) => (
+      {groupedMessages.map(({ userId, messages }: IGroupedMessages, index: number) => (
         <Message
           key={index}
-          avatar=""
-          messages={[message.text]}
+          userId={userId}
+          messages={messages}
         />
       ))}
-
-      {/*<Message*/}
-      {/*  avatar=""*/}
-      {/*  messages={[*/}
-      {/*    'Hi Jenny, How r u today?',*/}
-      {/*    'Did you train yesterday',*/}
-      {/*    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Volutpat lacus laoreet non curabitur gravida.',*/}
-      {/*  ]}*/}
-      {/*/>*/}
-
-      {/*<Message*/}
-      {/*  itsMe*/}
-      {/*  avatar=""*/}
-      {/*  messages={[*/}
-      {/*    'Great! What\'s about you?',*/}
-      {/*    'Of course I did. Speaking of which check this out',*/}
-      {/*  ]}*/}
-      {/*/>*/}
-
-      {/*<Message*/}
-      {/*  avatar=""*/}
-      {/*  messages={[*/}
-      {/*    'Im good.',*/}
-      {/*    'See u later.',*/}
-      {/*  ]}*/}
-      {/*/>*/}
-
-      {/*<Message*/}
-      {/*  avatar=""*/}
-      {/*  messages={[*/}
-      {/*    'Hi Jenny, How r u today?',*/}
-      {/*    'Did you train yesterday',*/}
-      {/*    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Volutpat lacus laoreet non curabitur gravida.',*/}
-      {/*  ]}*/}
-      {/*/>*/}
-
-      {/*<Message*/}
-      {/*  itsMe*/}
-      {/*  avatar=""*/}
-      {/*  messages={[*/}
-      {/*    'Great! What\'s about you?',*/}
-      {/*    'Of course I did. Speaking of which check this out',*/}
-      {/*  ]}*/}
-      {/*/>*/}
-
-      {/*<Message*/}
-      {/*  avatar=""*/}
-      {/*  messages={[*/}
-      {/*    'Im good.',*/}
-      {/*    'See u later.',*/}
-      {/*  ]}*/}
-      {/*/>*/}
     </Paper>
   );
+}
+
+interface IProps {
+  list: MessageModel[];
+}
+
+interface IGroupedMessages {
+  userId: string;
+  messages: string[];
 }

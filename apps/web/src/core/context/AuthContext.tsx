@@ -10,27 +10,24 @@ const AuthContext = createContext<IAuthContext>({
   token: null,
 
   signIn: () => Promise.reject(),
-  signUp: () => Promise.reject(),
-  signOut: () => Promise.reject(),
 });
 
 export function AuthProvider({
   children,
-}: any) {
+  onSignIn,
+}: IAuthParams) {
   const [user, setUser] = useState<PublicUserModel | null>(null);
   const [token, setToken] = useState<string | null>(null);
 
   const signIn = async (data: SignInDTO) => {
-    const { accessToken } = await authAPI.signIn(data);
+    const { accessToken, user } = await authAPI.signIn(data);
+
     setToken(accessToken);
-  };
+    setUser(user);
 
-  const signUp = async () => {
-    console.log('sign up');
-  };
-
-  const signOut = async () => {
-    // navigate('/', { replace: true });
+    if (onSignIn) {
+      onSignIn(accessToken);
+    }
   };
 
   const ctx = useMemo<IAuthContext>(() => ({
@@ -39,8 +36,6 @@ export function AuthProvider({
     user,
     token,
     signIn,
-    signUp,
-    signOut,
   }), [user, token]);
 
   return (
@@ -60,6 +55,9 @@ export interface IAuthContext {
   token: string | null;
 
   signIn(data: SignInDTO): Promise<void>;
-  signUp(): Promise<void>;
-  signOut(): Promise<void>;
+}
+
+interface IAuthParams {
+  children: JSX.Element;
+  onSignIn?: (token: string) => void;
 }

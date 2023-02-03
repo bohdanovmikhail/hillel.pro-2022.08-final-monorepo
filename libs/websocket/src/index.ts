@@ -1,15 +1,15 @@
-import { MessageModel, NewMessageModel } from '@chat/models';
+import { MessageModel } from '@chat/models';
 
 export enum WebSocketEvents {
-  ClientMessage = 'ClientMessage',
-  ServerMessage = 'ServerMessage',
+  ToServerMessage = 'ToServerMessage',
+  ToClientMessage = 'ToClientMessage',
   RequestLastMessages = 'RequestLastMessages',
   ResponseLastMessages = 'ResponseLastMessages',
 }
 
 export interface IWebSocketClientMessage {
   chatId: string;
-  message: NewMessageModel;
+  text: string;
 }
 
 export interface IWebSocketServerMessage {

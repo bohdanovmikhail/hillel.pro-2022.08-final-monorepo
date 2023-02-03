@@ -7,3 +7,8 @@ import { UsersAPI } from './UsersAPI';
 export const authAPI = new AuthAPI(API_CONNECTION_URL);
 export const chatsAPI = new ChatsAPI(API_CONNECTION_URL);
 export const usersAPI = new UsersAPI(API_CONNECTION_URL);
+
+export function initAPIAuthorization(token: string): void {
+  chatsAPI.addHeader('Authorization', `Bearer ${token}`);
+  usersAPI.addHeader('Authorization', `Bearer ${token}`);
+}

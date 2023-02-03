@@ -18,6 +18,7 @@
       "@chat/constants": ["libs/constants/src/index.ts"],
       "@chat/mocks": ["libs/mocks/src/index.ts"],
       "@chat/models": ["libs/models/src/index.ts"],
+      "@chat/types": ["libs/types/src/index.ts"],
       "@chat/websocket": ["libs/websocket/src/index.ts"]
     }
   },

@@ -1,3 +1,7 @@
-import { createPayloadAction } from '../_utils';
+import { usersAPI } from '../../api';
+import { createRequestAction } from '../_utils';
 
-export const usersGetInfo = createPayloadAction('users.getInfo');
+export const usersGetInfo = createRequestAction(
+  'users.getInfo',
+  (uId: string) => usersAPI.get(uId),
+);

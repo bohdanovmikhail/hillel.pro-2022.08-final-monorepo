@@ -8,12 +8,13 @@ export function createPayloadActionWith<
 >(
   type: T,
   payloadCreator: PC,
-): IPayloadActionWithCreator<P, T, PC, Args> & IActionType<T> {
-  const actionCreator = (...args: Args): IPayloadAction<T, P> => ({
+): IPayloadActionWithCreator<P, T, PC, Args> {
+  const actionCreator = (...args: Args): IPayloadAction<P, T> => ({
     type,
     payload: payloadCreator(...args as any),
   });
   actionCreator.TYPE = type;
+  actionCreator.toString = () => type;
 
   return actionCreator;
 }

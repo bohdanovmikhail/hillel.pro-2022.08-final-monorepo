@@ -1,8 +1,14 @@
-import { createAction, createPayloadActionWith, IWSEmit } from '../_utils';
+import { createAction, createPayloadAction, createPayloadActionWith, IWSMessage } from '../_utils';
 
 // Connection actions
-export const socketsConnect = createAction('ws.connect');
+export const socketsConnect = createPayloadAction('ws.connect');
 export const socketsDisconnect = createAction('ws.disconnect');
 
-// Emit actions
-export const socketsEmit = createPayloadActionWith('ws.emit', (type: string, data: any): IWSEmit => ({ type, data }));
+// Actions
+const wsMessageCreator = (type: string, data: any): IWSMessage => ({ type, data });
+
+export const socketsEmit = createPayloadActionWith('ws.emit', wsMessageCreator);
+export const socketsReceive = createPayloadActionWith('ws.receive', wsMessageCreator);
+
+// Request Entity
+// export const socketsRequestEntity = createPayloadActionWith();

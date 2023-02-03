@@ -10,7 +10,7 @@ import { ChatItem } from './ChatItem';
 
 export function ChatList({ list }: IProps) {
   return (
-    <List sx={{ bgcolor: 'background.paper' }}>
+    <List sx={{ bgcolor: 'background.paper', padding: '0' }}>
       <Divider component="li" />
 
       {list.map((item, index) => (

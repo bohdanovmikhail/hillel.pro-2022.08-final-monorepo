@@ -6,7 +6,8 @@ import * as actions from './actions';
 
 export default createMappedReducer<UserModel>({
   actions: {
-    ADD: '',
+    ADD: actions.usersGetInfo.SUCCESS_TYPE,
+    UPDATE: '',
     REMOVE: '',
   },
 });

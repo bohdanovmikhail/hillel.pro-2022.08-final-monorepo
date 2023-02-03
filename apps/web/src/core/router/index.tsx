@@ -31,7 +31,7 @@ export default createRouter([
             element: <ChatEmpty />,
           },
           {
-            path: ':roomId',
+            path: ':chatId',
             element: <ChatRoom />,
           },
         ]

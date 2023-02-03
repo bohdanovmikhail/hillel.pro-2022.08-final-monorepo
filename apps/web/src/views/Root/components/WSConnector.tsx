@@ -2,18 +2,23 @@ import { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import { socketsConnect, socketsDisconnect } from '../../../core/store/sockets';
+import { useAuth } from '../../../core/context';
 
 function WSConnectorView({ delay = 0, connect, disconnect }: IProps) {
+  const { token } = useAuth();
+
   useEffect(() => {
     const id = setTimeout(() => {
-      connect();
+      if (token) {
+        connect(token);
+      }
     }, delay);
 
     return () => {
       clearTimeout(id);
       disconnect();
     };
-  }, []);
+  }, [token]);
 
   return null;
 }
@@ -27,6 +32,6 @@ export const WSConnector = connect(null, mapDispatch)(WSConnectorView);
 
 interface IProps {
   delay?: number;
-  connect: () => void;
+  connect: (token: string) => void;
   disconnect: () => void;
 }

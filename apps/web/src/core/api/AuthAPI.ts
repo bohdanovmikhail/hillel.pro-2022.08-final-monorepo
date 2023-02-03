@@ -1,29 +1,16 @@
-import { SignInDTO, TokenDTO } from '@chat/models';
+import { SignInDTO, SignedInDTO } from '@chat/models';
+import { BaseAPI } from './_BaseAPI';
 
-export class AuthAPI {
-  constructor(protected connectionUrl: string) {
+export class AuthAPI extends BaseAPI {
+  constructor(baseUrl: string) {
+    super(`${baseUrl}/auth`);
   }
 
-  public async signIn(data: SignInDTO): Promise<TokenDTO> {
-    const response = await fetch(`${this.baseUrl}/signin`, {
-      method: 'POST',
-      body: JSON.stringify({
-        username: data.userName,
-        password: data.password,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    return await response.json();
+  public signIn(data: SignInDTO): Promise<SignedInDTO> {
+    return this.fetchPost('signin', data);
   }
 
   public async signUp() {}
 
   public async forgot() {}
-
-  protected get baseUrl(): string {
-    return `${this.connectionUrl}/auth`;
-  }
 }

@@ -1,19 +1,23 @@
-import { AnyAction, combineReducers } from 'redux';
+import { combineReducers } from 'redux';
 
-import { MessageModel } from '@chat/models';
+import {
+  createListReducer,
+  IPayloadAction,
+} from '../_utils';
 
 import * as actions from './actions';
-import { createMockMessage } from '@chat/mocks';
 
-const initial: MessageModel[] = [];
+const listReducer = createListReducer({
+  actions: {
+    ADD: actions.messagesReceive.TYPE,
+    REMOVE: '',
+  },
+});
 
-function listReducer(state: MessageModel[] = initial, action: AnyAction) {
+function activeChatIdReducer(state: string | null = null, action: IPayloadAction<string>) {
   switch (action.type) {
-    case actions.messagesReceive.TYPE:
-      return [
-        ...state,
-        action.payload,
-      ];
+    case actions.messagesSetCurrentChat.TYPE:
+      return action.payload;
 
     default:
       return state;
@@ -22,4 +26,5 @@ function listReducer(state: MessageModel[] = initial, action: AnyAction) {
 
 export default combineReducers({
   list: listReducer,
+  activeChatId: activeChatIdReducer,
 });

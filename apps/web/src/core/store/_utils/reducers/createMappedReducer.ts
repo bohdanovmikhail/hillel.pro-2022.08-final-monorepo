@@ -2,80 +2,37 @@ import { combineReducers } from 'redux';
 
 import { _BaseModel } from '@chat/models';
 
-import { IPayloadAction } from '../types';
+import { createListReducer } from './createListReducer';
+import { createMapReducer } from './createMapReducer';
 
 export function createMappedReducer<Entity extends _BaseModel>({
-  actions: { ADD, REMOVE },
+  actions: { ADD, UPDATE, REMOVE },
   initial = [],
-}: IMappedReducerParams<Entity>) {
-  const initialList = initial;
-  const initialIds = initial.map((entity) => entity.id);
-  const initialMap = initial.reduce((map, entity) => ({
-    ...map,
-    [entity.id]: entity,
-  }), {});
+}: IParams<Entity>) {
+  const idsReducer = createListReducer<Entity>({
+    actions: { ADD, REMOVE },
+    initial,
+    pickFromEntity: (entity: Entity) => entity.id,
+  });
 
-  function listReducer(
-    state: Entity[] = initialList,
-    action: IPayloadAction<string, Entity>,
-  ) {
-    switch (action.type) {
-      case ADD:
-        return [
-          ...state,
-          action.payload,
-        ];
-
-      default:
-        return state;
-    }
-  }
-
-  function idsReducer(
-    state: string[] = initialIds,
-    action: IPayloadAction<string, Entity>,
-  ) {
-    switch (action.type) {
-      case ADD:
-        return [
-          ...state,
-          action.payload.id,
-        ];
-
-      default:
-        return state;
-    }
-  }
-
-  function mapReducer(
-    state: Record<string, Entity> = initialMap,
-    action: IPayloadAction<string, Entity>,
-  ) {
-    switch (action.type) {
-      case ADD:
-        return {
-          ...state,
-          [action.payload.id]: action.payload,
-        };
-
-      default:
-        return state;
-    }
-  }
+  const mapReducer = createMapReducer({
+    actions: { ADD, UPDATE, REMOVE },
+    initial,
+  });
 
   return combineReducers({
-    list: listReducer,
     ids: idsReducer,
     map: mapReducer,
-  })
+  });
 }
 
-interface IMappedReducerParams<Entity extends _BaseModel> {
-  actions: IMappedReducerActions;
+interface IParams<Entity extends _BaseModel> {
+  actions: IActions;
   initial?: Entity[];
 }
 
-interface IMappedReducerActions {
+interface IActions {
   ADD: string;
+  UPDATE: string;
   REMOVE: string;
 }

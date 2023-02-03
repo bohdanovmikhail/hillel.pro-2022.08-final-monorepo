@@ -1,17 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { WsException } from '@nestjs/websockets';
 import { Socket } from 'socket.io';
-import { parse } from 'cookie';
 
-import { UserModel } from '@chat/models';
+import { PublicUserModel } from '@chat/models';
+
+import { AuthService } from '../auth/auth.service';
 
 @Injectable()
 export class MessagesService {
-  async getUserFromSocket(socket: Socket): Promise<UserModel> {
-    const cookie = socket.handshake.headers.cookie;
-    const { Authentication: authenticationToken } = parse(cookie);
-    // const user = await this.authenticationService.getUserFromAuthenticationToken(authenticationToken);
-    const user = null;
+  constructor(private authService: AuthService) {}
+
+  async getUserFromSocket(socket: Socket): Promise<PublicUserModel> {
+    const authToken = socket.handshake.headers.authorization.split(' ')[1];
+
+    const user = await this.authService.getUserFromToken(authToken);
 
     if (!user) {
       throw new WsException('Invalid credentials.');

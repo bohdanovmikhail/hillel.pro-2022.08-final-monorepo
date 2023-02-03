@@ -1,11 +1,15 @@
 import { Avatar, Box, IconButton, Menu, MenuItem, Tooltip, Typography } from '@mui/material';
 
+import { useAuth } from '../../../core/context';
+
 export function UserMenu({ items }: IProps) {
+  const { user } = useAuth();
+
   return (
     <Box sx={{ flexGrow: 0 }}>
       <Tooltip title="Open settings">
         <IconButton sx={{ p: 0 }}>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+          <Avatar alt="Remy Sharp" src={user?.avatar} />
         </IconButton>
       </Tooltip>
       <Menu
